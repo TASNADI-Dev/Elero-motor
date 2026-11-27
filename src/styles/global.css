@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@font-face {
+	font-family: "Satoshi";
+	src: url("/global/fonts/Satoshi-Variable.woff2") format("woff2");
+	font-weight: 300 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Satoshi";
+	src: url("/global/fonts/Satoshi-VariableItalic.woff2") format("woff2");
+	font-weight: 300 900;
+	font-style: italic;
+	font-display: swap;
+}
+
+@theme static {
+	/* Default Tailwind colors are disabled: only theme colors may be used. */
+	--color-*: initial;
+
+	/* Base colors: the palette only. Elements use the semantic colors below. */
+	--color-white: #ffffff;
+	--color-black: #000000;
+
+	--color-blue-0: #f2f7ff;
+	--color-blue-100: #ddebfe;
+	--color-blue-200: #b7d5fe;
+	--color-blue-300: #87baff;
+	--color-blue-400: #4a98fe;
+	--color-blue-500: #0071e3;
+	--color-blue-600: #045ab6;
+	--color-blue-700: #01458f;
+	--color-blue-800: #013169;
+	--color-blue-900: #002049;
+
+	--color-gray-0: #f5f5f7;
+	--color-gray-100: #e7e7eb;
+	--color-gray-200: #d4d4d7;
+	--color-gray-300: #bdbdc0;
+	--color-gray-400: #9e9ea1;
+	--color-gray-500: #808083;
+	--color-gray-600: #636366;
+	--color-gray-700: #47474a;
+	--color-gray-800: #2d2d30;
+	--color-gray-900: #18181a;
+
+	--color-orange-500: #f39200;
+
+	/* Semantic colors: mapped to the base palette, named by purpose. */
+	--color-primary: var(--color-blue-500);
+	--color-primary-hover: var(--color-blue-600);
+	--color-primary-active: var(--color-blue-700);
+	--color-primary-subtle: var(--color-blue-100);
+	--color-accent: var(--color-orange-500);
+
+	--color-surface: var(--color-white);
+	--color-surface-muted: var(--color-gray-0);
+	--color-surface-dark: var(--color-gray-900);
+
+	--color-text: var(--color-gray-900);
+	--color-text-body: var(--color-gray-700);
+	--color-text-muted: var(--color-gray-600);
+	--color-text-subtle: var(--color-gray-400);
+	--color-text-inverse: var(--color-white);
+	--color-text-link: var(--color-blue-500);
+
+	--color-border: var(--color-gray-100);
+	--color-border-strong: var(--color-gray-200);
+	--color-border-dark: var(--color-gray-800);
+
+	--color-shadow: var(--color-black);
+
+	--font-sans: "Satoshi", sans-serif;
+	--font-heading: "Satoshi", sans-serif;
+
+	--container-content: 76.875rem; /* 1230px */
+}

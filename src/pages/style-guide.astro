@@ -1,0 +1,51 @@
+---
+// Internal style guide: lists every theme color and reusable component. Noindex, not linked anywhere.
+import "../styles/global.css";
+import css from "../styles/global.css?raw";
+
+const colors = [...css.matchAll(/--color-([a-z0-9-]+):\s*([^;]+);/g)]
+	.filter(([, name]) => name !== "*")
+	.map(([, name, value]) => ({ name, value: value.trim() }));
+const baseColors = colors.filter((color) => !color.value.startsWith("var("));
+const semanticColors = colors.filter((color) => color.value.startsWith("var("));
+const groups = [
+	{ title: "Base colors", colors: baseColors },
+	{ title: "Semantic colors", colors: semanticColors },
+].filter((group) => group.colors.length > 0);
+---
+
+<!doctype html>
+<html lang="hu">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex, nofollow" />
+		<link rel="icon" type="image/svg+xml" href="/global/favicon.svg" />
+		<title>Style guide</title>
+	</head>
+	<body class="font-sans">
+		<main class="mx-auto w-full max-w-content px-4 py-12">
+			<section>
+				<h2 class="font-heading text-3xl">Colors</h2>
+				{
+					groups.map((group) => (
+						<div class="mt-8">
+							<h3 class="font-heading text-xl">{group.title}</h3>
+							<ul class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+								{group.colors.map((color) => (
+									<li>
+										<div
+											class="h-20 rounded-lg border"
+											style={`background-color: var(--color-${color.name})`}
+										/>
+										<p class="mt-2 text-sm">{color.name}</p>
+									</li>
+								))}
+							</ul>
+						</div>
+					))
+				}
+			</section>
+		</main>
+	</body>
+</html>

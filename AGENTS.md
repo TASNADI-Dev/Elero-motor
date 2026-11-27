@@ -2,7 +2,7 @@
 
 ## Project Goal
 
-The main goal of this project is to migrate an existing Webflow site to Astro and Sanity. The original website is https://www.tasnadi.co/ — whenever a request is unclear or you don't understand what something refers to (a page, section, component, behavior or piece of content), check the original site and use it as the reference.
+The main goal of this project is to build a new website with Astro and Sanity. There is no previous website: the only reference is the Figma design (see the Figma Design section). Whenever a request is unclear or you don't understand what something refers to (a page, section, component, behavior or piece of content), check the Figma design and use it as the reference.
 
 ## Figma Design
 
@@ -21,8 +21,8 @@ Whenever the user refers to the Figma design, the design file is: https://www.fi
 
 ## Page Titles (Meta Title)
 
-* **Pattern:** Every page's browser tab title (`<title>`) is `Page name | TASNADI`: the page name, then a space, a vertical bar `|`, a space, and `TASNADI` in capital letters without accents (copied from the original site, e.g. `Podcast | TASNADI`, `Rólunk | TASNADI`, `Webdizájn és branding ügynökség | TASNADI`).
-* **Implementation:** `src/layouts/Base.astro` appends ` | TASNADI` (the site title from the site settings) automatically, so a page passes only the page name as `title` (e.g. `<Base title={copy.pageTitle}>`) and never adds the suffix, the brand name or any other separator itself. Pages whose title comes from Sanity must follow the same pattern.
+* **Pattern:** Every page's browser tab title (`<title>`) is `Page name | Elero Motor`: the page name, then a space, a vertical bar `|`, a space, and the site name `Elero Motor` written exactly like that (e.g. `Rólunk | Elero Motor`).
+* **Implementation:** `src/layouts/Base.astro` appends ` | Elero Motor` (the site title from the site settings) automatically, so a page passes only the page name as `title` (e.g. `<Base title={copy.pageTitle}>`) and never adds the suffix, the brand name or any other separator itself. Pages whose title comes from Sanity must follow the same pattern.
 * **Every New Page:** Follow this pattern for every new page, (the page name is Hungarian). The home page uses the descriptive title, not just the brand name.
 * **Dashes:** The page name follows the dash rule above (no em dash `—`).
 
@@ -32,9 +32,9 @@ Whenever the user refers to the Figma design, the design file is: https://www.fi
 * **Strict Color Usage:** Use only the theme colors defined in `src/styles/global.css`. Do **not** invent arbitrary hex codes or use default Tailwind colors (they are disabled via `--color-*: initial`).
   * **Semantic colors only:** Elements, components, sections and pages must never use base color variables (e.g. `bg-gray-900`, `text-white`, `border-gray-300`, `var(--color-orange-700)`). Always use a semantic color (e.g. `bg-surface-dark`, `text-text-inverse`, `border-border-strong`, `var(--color-primary-active)`), including inside arbitrary values and `color-mix()` (shadows use `var(--color-shadow)`). Base colors exist only as the palette that semantic colors are mapped to in `src/styles/global.css`, and as the swatches in the Base colors group of the style guide.
   * If no semantic color fits the purpose, add a new semantic color mapped to the right base color (name it by purpose, not by appearance) instead of using the base color directly.
-  * If a design or the original site uses a color that is not a variable, do not hardcode it — ask the user whether to add it as a new variable or use an existing color instead.
-  * Whenever you add, change or remove a color variable (base or semantic) in `src/styles/global.css`, update the Colors section of `src/pages/dev/style-guide.astro` in the same change.
-* **Typography:** Use only **Museo Sans** (`font-sans` / `font-heading`) for all text. The font files are in `public/global/fonts/`, loaded via `@font-face` and defined as theme fonts via `@theme` in `src/styles/global.css` (imported in `src/layouts/Base.astro`). Do not use other font families.
+  * If the design uses a color that is not a variable, do not hardcode it — ask the user whether to add it as a new variable or use an existing color instead.
+  * Whenever you add, change or remove a color variable (base or semantic) in `src/styles/global.css`, update the Colors section of `src/pages/style-guide.astro` (served at `/style-guide`, noindex, never linked from anywhere, and it does not use the `Base` layout) in the same change.
+* **Typography:** Use only **Satoshi** (`font-sans` / `font-heading`) for all text. The font files are in `public/global/fonts/`, loaded via `@font-face` and defined as theme fonts via `@theme` in `src/styles/global.css` (imported in `src/layouts/Base.astro`). Do not use other font families.
 * **Units:** Do not use `px` for font sizes — use `rem` instead. When the user specifies a value in `px`, always convert it to `rem` first (16px = 1rem) before applying it in code. **Exception:** border radius values may use `px`.
 * **Container:** The max width of the content should be 1230px.
 * **Asset Storage:** For now, store all images and other assets in the `public/` folder. Every page gets its own folder (e.g. `public/home/`, `public/about/`) holding only the assets used on that page. Assets used on more than one page (e.g. favicon, logo) go in `public/global/`. Folder names are in English.
@@ -56,7 +56,7 @@ Whenever the user refers to the Figma design, the design file is: https://www.fi
 
 * **File Structure:** Place all reusable `.astro` components in `src/components/`, page layouts in `src/layouts/`, and pages in `src/pages/`.
 * **Islands Architecture:** Keep server-first rendering by default. Only use interactive client directives (`client:load`, `client:idle`, `client:visible`) when strictly necessary for JavaScript interactivity.
-* **Style guide:** `src/pages/dev/style-guide.astro` is the internal reference for colors and reusable UI components. Whenever you create or update a UI component (or add a variant), also add it to this page. Keep it out of the main nav, group by component with every variant visible, and write the page itself in English. Do not add descriptions under a component's heading; show only the component and its variants. The only exception is a short help note about behavior the preview cannot show (e.g. a component that renders in Hungarian only).
+* **Style guide:** `src/pages/style-guide.astro` (served at `/style-guide`, noindex, never linked from anywhere, and it does not use the `Base` layout) is the internal reference for colors and reusable UI components. Whenever you create or update a UI component (or add a variant), also add it to this page. Keep it out of the main nav, group by component with every variant visible, and write the page itself in English. Do not add descriptions under a component's heading; show only the component and its variants. The only exception is a short help note about behavior the preview cannot show (e.g. a component that renders in Hungarian only).
 
 ## JavaScript Organization & Formatting
 
