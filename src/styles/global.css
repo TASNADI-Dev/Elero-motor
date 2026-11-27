@@ -64,6 +64,7 @@
 	--color-text-muted: var(--color-gray-600);
 	--color-text-subtle: var(--color-gray-400);
 	--color-text-inverse: var(--color-white);
+	--color-text-inverse-muted: var(--color-gray-300);
 	--color-text-link: var(--color-blue-500);
 
 	--color-border: var(--color-gray-100);
@@ -75,5 +76,45 @@
 	--font-sans: "Satoshi", sans-serif;
 	--font-heading: "Satoshi", sans-serif;
 
-	--container-content: 76.875rem; /* 1230px */
+	--container-content: 80rem; /* 1280px */
+}
+
+/* Endless carousel: the track holds two identical lists and moves by exactly one list width per loop. */
+@theme static {
+	--animate-marquee: marquee 25s linear infinite;
+
+	@keyframes marquee {
+		from {
+			translate: 0 0;
+		}
+		to {
+			translate: -50% 0;
+		}
+	}
+}
+
+/* One-shot page load animations (same easing as the button fill). Stagger them with animation-delay. */
+@theme static {
+	--animate-load-rise: load-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+	--animate-load-settle: load-settle 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+	@keyframes load-rise {
+		from {
+			opacity: 0;
+			translate: 0 var(--load-rise-from, 1.5rem);
+		}
+		to {
+			opacity: 1;
+			translate: 0 0;
+		}
+	}
+
+	@keyframes load-settle {
+		from {
+			scale: 1.08;
+		}
+		to {
+			scale: 1;
+		}
+	}
 }

@@ -37,7 +37,7 @@ Whenever the user refers to the Figma design, the design file is: https://www.fi
   * Whenever you add, change or remove a color variable (base or semantic) in `src/styles/global.css`, update the Colors section of `src/pages/style-guide.astro` (served at `/style-guide`, noindex, never linked from anywhere, and it does not use the `Base` layout) in the same change.
 * **Typography:** Use only **Satoshi** (`font-sans` / `font-heading`) for all text. The font files are in `public/global/fonts/`, loaded via `@font-face` and defined as theme fonts via `@theme` in `src/styles/global.css` (imported in `src/layouts/Base.astro`). Do not use other font families.
 * **Units:** Do not use `px` for font sizes — use `rem` instead. When the user specifies a value in `px`, always convert it to `rem` first (16px = 1rem) before applying it in code. **Exception:** border radius values may use `px`.
-* **Container:** The max width of the content should be 1230px.
+* **Container:** The max width of the content should be 1280px.
 * **Asset Storage:** For now, store all images and other assets in the `public/` folder. Every page gets its own folder (e.g. `public/home/`, `public/about/`) holding only the assets used on that page. Assets used on more than one page (e.g. favicon, logo) go in `public/global/`. Folder names are in English.
 
 ## Images & Alt Text

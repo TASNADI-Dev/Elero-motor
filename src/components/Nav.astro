@@ -9,7 +9,11 @@ const endLinks = [routes.videos, routes.references];
 const mobileLinks = [...startLinks, ...endLinks];
 ---
 
-<nav aria-label="Főmenü" class="relative text-text-inverse">
+<nav
+	aria-label="Főmenü"
+	data-nav
+	class="relative isolate bg-linear-to-b from-surface-dark to-transparent text-text-inverse before:absolute before:inset-0 before:-z-10 before:bg-surface-dark before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] data-scrolled:before:opacity-100 motion-reduce:before:transition-none"
+>
 	<div
 		class="mx-auto flex w-full max-w-content items-center justify-between px-4 py-4.5 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr]"
 	>
@@ -94,4 +98,16 @@ const mobileLinks = [...startLinks, ...endLinks];
 	document.addEventListener("keydown", (event) => {
 		if (event.key === "Escape") setOpen(false);
 	});
+</script>
+
+<script>
+	// Marks the nav as scrolled once the page leaves the top, so CSS can fade in its solid dark background.
+	const nav = document.querySelector<HTMLElement>("[data-nav]");
+
+	function update() {
+		nav?.toggleAttribute("data-scrolled", window.scrollY > 16);
+	}
+
+	update();
+	window.addEventListener("scroll", update, { passive: true });
 </script>

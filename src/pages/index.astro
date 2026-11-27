@@ -1,9 +1,91 @@
 ---
 import Base from "../layouts/Base.astro";
+
+const stripItems = [
+	"Redőnymotorok",
+	"Napellenző-motorok",
+	"Zsalúziamotorok",
+	"Fali vezérlők",
+	"Távirányítók",
+	"Okosotthon",
+	"Redőnymotorok",
+	"Napellenző-motorok",
+];
+// The last two items repeat the first two; they only fill the strip on wide screens. Below xl the strip is a looping carousel without them.
+const repeatedFrom = stripItems.length - 2;
 ---
 
-<Base title="Főoldal">
-	<main class="mx-auto w-full max-w-content px-4">
-		<h1 class="font-heading text-4xl">Elero motor</h1>
+<Base title="Redőnymotorok és vezérlések">
+	<main>
+		<section class="relative isolate flex min-h-svh flex-col justify-end overflow-hidden bg-surface-dark text-text-inverse">
+			<div class="absolute inset-0 -z-10">
+				<img
+					src="/home/hero-bg.jpg"
+					width="1600"
+					height="1000"
+					alt="Fali vezérlő egy árnyékolt nappali falán"
+					fetchpriority="high"
+					class="size-full animate-load-settle object-cover object-[75%_center] motion-reduce:animate-none"
+				/>
+				<div
+					class="absolute inset-0 bg-[linear-gradient(65deg,color-mix(in_srgb,var(--color-surface-dark)_92%,transparent)_46.8%,color-mix(in_srgb,var(--color-surface-dark)_55%,transparent)_66.8%,transparent_83.4%)] max-md:bg-none max-md:bg-surface-dark/80"
+				>
+				</div>
+			</div>
+
+			<div class="mx-auto flex w-full max-w-content flex-col px-4 pt-32 pb-24 sm:px-6">
+				<div class="flex flex-col gap-10">
+					<div class="flex flex-col gap-6">
+						<h1 class="font-heading text-[5.5rem]/23 font-medium tracking-[-0.02em] max-lg:text-[4rem]/17 max-sm:text-[2.5rem]/11">
+							<span class="block animate-load-rise [animation-delay:150ms] motion-reduce:animate-none">Árnyék, egyetlen</span>
+							<span class="block animate-load-rise [animation-delay:280ms] motion-reduce:animate-none">érintésre.</span>
+						</h1>
+						<p
+							class="max-w-140 animate-load-rise text-xl/7.5 font-bold text-text-inverse-muted [animation-delay:450ms] motion-reduce:animate-none"
+						>
+							<span class="block">Redőnymotorok és vezérlések Németországból.</span>
+							<span class="block">Évtizedekre tervezve.</span>
+						</p>
+					</div>
+
+					<div class="flex items-center gap-3.5 animate-load-rise [animation-delay:600ms] motion-reduce:animate-none">
+						<div
+							class="flex size-11 shrink-0 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--color-text-inverse)_28%,transparent)] bg-[color-mix(in_srgb,var(--color-text-inverse)_12%,transparent)] backdrop-blur-[6px]"
+						>
+							<img src="/home/icon-check-verified.svg" width="22" height="22" alt="" />
+						</div>
+						<div class="flex flex-col gap-1 text-[0.875rem]/5">
+							<p class="text-[0.9375rem]/5 font-bold">Made in Germany</p>
+							<p>Németországban fejlesztve és gyártva</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div
+				class="animate-load-rise overflow-hidden bg-surface-dark py-4.5 text-[0.9375rem]/5 font-medium [--load-rise-from:100%] [animation-delay:750ms] motion-reduce:animate-none"
+			>
+				<div
+					class="mx-auto flex w-full max-w-content px-4 sm:px-6 max-xl:mx-0 max-xl:w-max max-xl:max-w-none max-xl:animate-marquee max-xl:px-0 motion-reduce:max-xl:w-full motion-reduce:max-xl:animate-none motion-reduce:max-xl:justify-center motion-reduce:max-xl:px-4 motion-reduce:max-xl:sm:px-6"
+				>
+					<ul
+						class="flex w-full justify-between gap-x-8 gap-y-2 max-xl:w-auto max-xl:shrink-0 max-xl:justify-start max-xl:pr-8 motion-reduce:max-xl:shrink motion-reduce:max-xl:flex-wrap motion-reduce:max-xl:justify-center motion-reduce:max-xl:pr-0"
+					>
+						{
+							stripItems.map((item, index) => (
+								<li class:list={["whitespace-nowrap", index >= repeatedFrom && "max-xl:hidden"]}>{item}</li>
+							))
+						}
+					</ul>
+					<ul aria-hidden="true" class="hidden shrink-0 gap-x-8 pr-8 max-xl:flex motion-reduce:max-xl:hidden">
+						{
+							stripItems.slice(0, repeatedFrom).map((item) => (
+								<li class="whitespace-nowrap">{item}</li>
+							))
+						}
+					</ul>
+				</div>
+			</div>
+		</section>
 	</main>
 </Base>
