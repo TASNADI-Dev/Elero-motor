@@ -13,17 +13,17 @@ const Tag = rest.href ? "a" : "button";
 const attrs = Tag === "button" ? { type: "button", ...rest } : rest;
 
 const base = [
-	"group relative isolate inline-flex max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-full font-sans text-base/5 font-medium whitespace-nowrap no-underline",
-	// Lift + shadow on hover, press-down on click, white + blue focus ring.
-	"transition-[translate,scale,box-shadow] duration-300 ease-out",
-	"hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
+	"group relative isolate inline-flex max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-full font-sans font-bold whitespace-nowrap no-underline",
+	// Shadow on hover, press-down on click, white + blue focus ring.
+	"transition-[scale,box-shadow] duration-300 ease-out",
+	"active:scale-[0.98]",
 	"focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_var(--color-surface),0_0_0_5px_var(--color-primary)]",
 	// Dome-shaped fill that rises from the bottom edge behind the label.
 	"before:absolute before:-left-[10%] before:top-0 before:z-0 before:h-[200%] before:w-[120%] before:translate-y-1/2 before:rounded-full before:content-['']",
 	"before:transition-[translate] before:duration-500 before:ease-[cubic-bezier(0.22,1,0.36,1)]",
 	"hover:before:-translate-y-1/4 focus-visible:before:-translate-y-1/4",
 	// Reduced motion: no movement, the fill and colors still change instantly.
-	"motion-reduce:transition-none motion-reduce:before:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
+	"motion-reduce:transition-none motion-reduce:before:transition-none motion-reduce:active:scale-100",
 ];
 
 const variants: Record<Variant, string[]> = {
@@ -40,8 +40,8 @@ const variants: Record<Variant, string[]> = {
 };
 
 const sizes: Record<Size, string> = {
-	large: "px-7 py-4",
-	small: "px-5 py-2.5",
+	large: "px-7 py-3.5 text-[0.8125rem]/6 tracking-[0.04em]",
+	small: "px-5 py-2.5 text-[0.8125rem]/5",
 };
 
 const labelClasses = [

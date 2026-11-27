@@ -1,0 +1,60 @@
+---
+const circleButton = [
+	"inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border-strong bg-surface-muted text-text-muted",
+	"transition-[background-color,border-color,color,scale,box-shadow] duration-300 ease-out",
+	"hover:border-primary hover:bg-surface hover:text-primary active:scale-95",
+	"[&_svg]:transition-transform [&_svg]:duration-300 hover:[&_svg]:scale-110",
+	"focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_var(--color-surface),0_0_0_5px_var(--color-primary)]",
+	"motion-reduce:transition-none motion-reduce:[&_svg]:transition-none motion-reduce:hover:[&_svg]:scale-100 motion-reduce:active:scale-100",
+];
+---
+
+<div data-search>
+	<button type="button" aria-label="Termék keresése" aria-haspopup="dialog" data-search-open class:list={circleButton}>
+		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+			<path
+				d="M14 14L11.1 11.1M7.33333 4C9.17428 4 10.6667 5.49238 10.6667 7.33333M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z"
+				stroke="currentColor"
+				stroke-width="1.33333"
+				stroke-linecap="round"
+				stroke-linejoin="round"></path>
+		</svg>
+	</button>
+	<dialog
+		aria-label="Termékkereső"
+		class="m-auto w-[calc(100%-2rem)] max-w-xl overflow-hidden rounded-3xl bg-surface p-0 text-text shadow-[0_1.5rem_4rem_-1rem_color-mix(in_srgb,var(--color-shadow)_40%,transparent)] transition-[opacity,scale] duration-200 backdrop:bg-surface-dark/50 backdrop:backdrop-blur-sm starting:scale-95 starting:opacity-0 motion-reduce:transition-none"
+	>
+		<div class="flex items-center gap-3 p-4">
+			<input
+				type="search"
+				name="q"
+				aria-label="Termék keresése"
+				placeholder="Termék keresése"
+				autocomplete="off"
+				class="min-w-0 flex-1 rounded-full border border-border-strong bg-surface-muted px-5 py-2.5 text-[0.9375rem]/5 text-text transition-[border-color,box-shadow] duration-300 placeholder:text-text-muted focus-visible:border-primary focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_var(--color-surface),0_0_0_5px_var(--color-primary)] motion-reduce:transition-none"
+			/>
+			<button type="button" aria-label="Bezárás" data-search-close class:list={circleButton}>
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+					<path
+						d="M12 4L4 12M4 4L12 12"
+						stroke="currentColor"
+						stroke-width="1.33333"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
+				</svg>
+			</button>
+		</div>
+	</dialog>
+</div>
+
+<script>
+	// Opens the search overlay as a modal dialog; closes it via the close button or a backdrop click (Escape works natively).
+	document.querySelectorAll<HTMLElement>("[data-search]").forEach((root) => {
+		const dialog = root.querySelector("dialog")!;
+		root.querySelector("[data-search-open]")!.addEventListener("click", () => dialog.showModal());
+		root.querySelector("[data-search-close]")!.addEventListener("click", () => dialog.close());
+		dialog.addEventListener("click", (event) => {
+			if (event.target === dialog) dialog.close();
+		});
+	});
+</script>

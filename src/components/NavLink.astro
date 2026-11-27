@@ -1,0 +1,23 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"a"> & { href: string };
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<a
+	class:list={[
+		"group inline-flex flex-col gap-1 rounded-sm pt-1 text-[0.9375rem]/5 font-medium whitespace-nowrap no-underline transition-colors duration-300 hover:text-primary focus-visible:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary motion-reduce:transition-none",
+		className,
+	]}
+	{...rest}
+>
+	<span><slot /></span>
+	<!-- Underline grows in from the left on hover and slides out to the right on leave (origin flips instantly, only the scale is transitioned). -->
+	<span class="block h-0.5 w-full overflow-hidden" aria-hidden="true">
+		<span
+			class="block h-full w-full origin-right scale-x-0 bg-primary transition-[scale] duration-300 ease-out group-hover:origin-left group-hover:scale-x-100 group-focus-visible:origin-left group-focus-visible:scale-x-100 motion-reduce:transition-none"
+		></span>
+	</span>
+</a>

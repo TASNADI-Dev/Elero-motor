@@ -1,0 +1,97 @@
+---
+import Button from "./Button.astro";
+import NavLink from "./NavLink.astro";
+import SearchButton from "./SearchButton.astro";
+import { routes } from "../routes";
+
+const startLinks = [routes.motors, routes.controls, routes.about];
+const endLinks = [routes.videos, routes.references];
+const mobileLinks = [...startLinks, ...endLinks];
+---
+
+<nav aria-label="Főmenü" class="relative text-text-inverse">
+	<div
+		class="mx-auto flex w-full max-w-content items-center justify-between px-4 py-4.5 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr]"
+	>
+		<ul class="flex items-center gap-10 max-lg:hidden">
+			{
+				startLinks.map((link) => (
+					<li>
+						<NavLink href={link.path}>{link.title}</NavLink>
+					</li>
+				))
+			}
+		</ul>
+		<a
+			href={routes.home.path}
+			class="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+		>
+			<img src="/global/logo-elero.svg" width="108" height="16" alt="elero – főoldal" />
+		</a>
+		<div class="flex items-center justify-end gap-4">
+			<ul class="flex items-center gap-10 max-lg:hidden">
+				{
+					endLinks.map((link) => (
+						<li>
+							<NavLink href={link.path}>{link.title}</NavLink>
+						</li>
+					))
+				}
+			</ul>
+			<div class="flex items-center gap-3">
+				<SearchButton />
+				<Button href={routes.contact.path} size="small" class="max-lg:hidden">
+					{routes.contact.title}
+				</Button>
+				<button
+					type="button"
+					aria-label="Menü"
+					aria-expanded="false"
+					aria-controls="mobile-menu"
+					data-menu-toggle
+					class="group/burger inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border-strong bg-surface-muted text-text-muted transition-[background-color,border-color,color,scale,box-shadow] duration-300 ease-out hover:border-primary hover:bg-surface hover:text-primary focus-visible:shadow-[0_0_0_2px_var(--color-surface),0_0_0_5px_var(--color-primary)] focus-visible:outline-none active:scale-95 motion-reduce:transition-none motion-reduce:active:scale-100 lg:hidden"
+				>
+					<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="group-aria-expanded/burger:hidden">
+						<path d="M2 4.5H14M2 8H14M2 11.5H14" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round"></path>
+					</svg>
+					<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="hidden group-aria-expanded/burger:block">
+						<path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
+					</svg>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div
+		id="mobile-menu"
+		hidden
+		data-menu-panel
+		class="absolute inset-x-4 top-full z-40 rounded-2xl bg-surface-dark p-6 transition-[opacity,translate] duration-300 starting:-translate-y-2 starting:opacity-0 motion-reduce:transition-none sm:inset-x-6 lg:hidden"
+	>
+		<ul class="flex flex-col items-start gap-4">
+			{
+				mobileLinks.map((link) => (
+					<li>
+						<NavLink href={link.path}>{link.title}</NavLink>
+					</li>
+				))
+			}
+		</ul>
+		<Button href={routes.contact.path} class="mt-6 w-full">{routes.contact.title}</Button>
+	</div>
+</nav>
+
+<script>
+	// Toggles the mobile menu panel, keeps aria-expanded in sync and closes it on Escape.
+	const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+	const panel = document.querySelector<HTMLElement>("[data-menu-panel]");
+
+	function setOpen(open: boolean) {
+		toggle?.setAttribute("aria-expanded", String(open));
+		if (panel) panel.hidden = !open;
+	}
+
+	toggle?.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape") setOpen(false);
+	});
+</script>

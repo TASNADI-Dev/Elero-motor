@@ -2,6 +2,9 @@
 // Internal style guide: lists every theme color and reusable component. Noindex, not linked anywhere.
 import "../styles/global.css";
 import Button from "../components/Button.astro";
+import Nav from "../components/Nav.astro";
+import NavLink from "../components/NavLink.astro";
+import SearchButton from "../components/SearchButton.astro";
 import css from "../styles/global.css?raw";
 
 const colors = [...css.matchAll(/--color-([a-z0-9-]+):\s*([^;]+);/g)]
@@ -71,6 +74,35 @@ const buttonSizes = ["large", "small"] as const;
 						)
 					}
 				</ul>
+			</section>
+			<section class="mt-16">
+				<h2 class="font-heading text-3xl">Nav link</h2>
+				<ul class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+					<li>
+						<div class="rounded-2xl bg-surface-muted p-6 text-text">
+							<NavLink href="#">Motorok</NavLink>
+						</div>
+						<p class="mt-2 text-sm">Light background</p>
+					</li>
+					<li>
+						<div class="rounded-2xl bg-surface-dark p-6 text-text-inverse">
+							<NavLink href="#">Motorok</NavLink>
+						</div>
+						<p class="mt-2 text-sm">Dark background</p>
+					</li>
+				</ul>
+			</section>
+			<section class="mt-16">
+				<h2 class="font-heading text-3xl">Search button</h2>
+				<div class="mt-8">
+					<SearchButton />
+				</div>
+			</section>
+			<section class="mt-16">
+				<h2 class="font-heading text-3xl">Main nav</h2>
+				<div class="mt-8 rounded-2xl bg-surface-dark pb-4">
+					<Nav />
+				</div>
 			</section>
 		</main>
 	</body>
