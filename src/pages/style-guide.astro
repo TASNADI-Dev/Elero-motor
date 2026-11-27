@@ -1,6 +1,7 @@
 ---
 // Internal style guide: lists every theme color and reusable component. Noindex, not linked anywhere.
 import "../styles/global.css";
+import Button from "../components/Button.astro";
 import css from "../styles/global.css?raw";
 
 const colors = [...css.matchAll(/--color-([a-z0-9-]+):\s*([^;]+);/g)]
@@ -12,6 +13,12 @@ const groups = [
 	{ title: "Base colors", colors: baseColors },
 	{ title: "Semantic colors", colors: semanticColors },
 ].filter((group) => group.colors.length > 0);
+
+const buttonVariants = [
+	{ title: "Primary", variant: "primary" },
+	{ title: "Secondary", variant: "secondary" },
+] as const;
+const buttonSizes = ["large", "small"] as const;
 ---
 
 <!doctype html>
@@ -45,6 +52,25 @@ const groups = [
 						</div>
 					))
 				}
+			</section>
+			<section class="mt-16">
+				<h2 class="font-heading text-3xl">Button</h2>
+				<ul class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+					{
+						buttonVariants.flatMap(({ title, variant }) =>
+							buttonSizes.map((size) => (
+								<li>
+									<Button variant={variant} size={size}>
+										Megnézem
+									</Button>
+									<p class="mt-2 text-sm capitalize">
+										{title} / {size}
+									</p>
+								</li>
+							)),
+						)
+					}
+				</ul>
 			</section>
 		</main>
 	</body>

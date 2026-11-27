@@ -1,0 +1,55 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Variant = "primary" | "secondary";
+type Size = "large" | "small";
+type BaseProps = { variant?: Variant; size?: Size };
+type LinkProps = BaseProps & HTMLAttributes<"a"> & { href: string };
+type ButtonProps = BaseProps & HTMLAttributes<"button"> & { href?: undefined };
+type Props = LinkProps | ButtonProps;
+
+const { variant = "primary", size = "large", class: className, ...rest } = Astro.props;
+const Tag = rest.href ? "a" : "button";
+const attrs = Tag === "button" ? { type: "button", ...rest } : rest;
+
+const base = [
+	"group relative isolate inline-flex max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-full font-sans text-base/5 font-medium whitespace-nowrap no-underline",
+	// Lift + shadow on hover, press-down on click, white + blue focus ring.
+	"transition-[translate,scale,box-shadow] duration-300 ease-out",
+	"hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
+	"focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_var(--color-surface),0_0_0_5px_var(--color-primary)]",
+	// Dome-shaped fill that rises from the bottom edge behind the label.
+	"before:absolute before:-left-[10%] before:top-0 before:z-0 before:h-[200%] before:w-[120%] before:translate-y-1/2 before:rounded-full before:content-['']",
+	"before:transition-[translate] before:duration-500 before:ease-[cubic-bezier(0.22,1,0.36,1)]",
+	"hover:before:-translate-y-1/4 focus-visible:before:-translate-y-1/4",
+	// Reduced motion: no movement, the fill and colors still change instantly.
+	"motion-reduce:transition-none motion-reduce:before:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
+];
+
+const variants: Record<Variant, string[]> = {
+	primary: [
+		"bg-primary text-text-inverse before:bg-primary-hover",
+		"hover:shadow-[0_0.5rem_1.25rem_-0.375rem_color-mix(in_srgb,var(--color-primary)_60%,transparent)]",
+	],
+	secondary: [
+		"bg-transparent text-primary before:bg-primary",
+		// The 1.5px outline is an inset ring (a real border would be rounded down to 1px on standard screens and change the button height).
+		"after:pointer-events-none after:absolute after:inset-0 after:z-20 after:rounded-[inherit] after:shadow-[inset_0_0_0_1.5px_var(--color-primary)] after:content-['']",
+		"hover:shadow-[0_0.5rem_1.25rem_-0.375rem_color-mix(in_srgb,var(--color-primary)_60%,transparent)]",
+	],
+};
+
+const sizes: Record<Size, string> = {
+	large: "px-7 py-4",
+	small: "px-5 py-2.5",
+};
+
+const labelClasses = [
+	"relative z-10 transition-colors duration-300 motion-reduce:transition-none",
+	variant === "secondary" && "delay-100 group-hover:text-text-inverse group-focus-visible:text-text-inverse",
+];
+---
+
+<Tag class:list={[base, variants[variant], sizes[size], className]} {...attrs}>
+	<span class:list={labelClasses}><slot /></span>
+</Tag>
